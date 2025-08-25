@@ -6,11 +6,16 @@ export type BurgerIngredientsUIProps = {
   buns: TIngredient[];
   mains: TIngredient[];
   sauces: TIngredient[];
+
   titleBunRef: RefObject<HTMLHeadingElement>;
   titleMainRef: RefObject<HTMLHeadingElement>;
   titleSaucesRef: RefObject<HTMLHeadingElement>;
+
   bunsRef: (node?: Element | null | undefined) => void;
   mainsRef: (node?: Element | null | undefined) => void;
   saucesRef: (node?: Element | null | undefined) => void;
+
+  listRef: RefObject<HTMLDivElement>;
+
   onTabClick: (val: string) => void;
 };
