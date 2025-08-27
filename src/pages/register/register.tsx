@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '@/services/store';
 import { registerUser } from '@/services/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectUserError } from '@/services/selectors/user';
+import { TAuthResponse } from '@/utils/burger-api';
+import { setCookie } from '@/utils/cookie';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');
@@ -23,8 +25,14 @@ export const Register: FC = () => {
         password
       })
     ).then((res) => {
-      if (res.type.endsWith('rejected')) {
+      if (res.meta.requestStatus === 'rejected') {
         return;
+      }
+
+      const payload = res.payload as TAuthResponse | undefined;
+      if (payload) {
+        setCookie('accessToken', payload.accessToken);
+        localStorage.setItem('refreshToken', payload.refreshToken);
       }
       navigate('/login');
     });

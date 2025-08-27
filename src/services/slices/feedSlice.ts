@@ -36,7 +36,11 @@ export const getOrderById = createAsyncThunk(
 const feedSlice = createSlice({
   name: 'feed',
   initialState,
-  reducers: {},
+  reducers: {
+    clearOrderById: (state) => {
+      state.orderById = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getFeeds.pending, (state) => {
@@ -69,5 +73,7 @@ const feedSlice = createSlice({
       });
   }
 });
+
+export const { clearOrderById } = feedSlice.actions;
 
 export default feedSlice.reducer;

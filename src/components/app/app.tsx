@@ -21,6 +21,7 @@ import { IngredientDetails } from '@components/ingredient-details/ingredient-det
 import { useAppDispatch } from '@/services/store';
 import { fetchIngredients } from '@/services/slices/ingredients';
 import { refreshUser } from '@/services/slices/userSlice';
+import { PageWrapper } from '../ui/page-wrapper';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -36,90 +37,132 @@ const App: React.FC = () => {
   const handleClose = () => navigate(-1);
 
   return (
-    <Routes>
-      <Route path='/' element={<MainLayout />}>
-        {/* основные страницы */}
-        <Route index element={<ConstructorPage />} />
-        <Route path='feed' element={<Feed />} />
-        <Route
-          path='login'
-          element={
-            <ProtectedRoute onlyUnAuth>
-              <Login />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='register'
-          element={
-            <ProtectedRoute onlyUnAuth>
-              <Register />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='forgot-password'
-          element={
-            <ProtectedRoute onlyUnAuth>
-              <ForgotPassword />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='reset-password'
-          element={
-            <ProtectedRoute onlyUnAuth>
-              <ResetPassword />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='profile'
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='profile/orders'
-          element={
-            <ProtectedRoute>
-              <ProfileOrders />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='*' element={<NotFound404 />} />
+    <>
+      <Routes location={background || location}>
+        <Route path='/' element={<MainLayout />}>
+          {/* основные страницы */}
+          <Route index element={<ConstructorPage />} />
+          <Route path='feed' element={<Feed />} />
+          <Route
+            path='login'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='register'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='forgot-password'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ForgotPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='reset-password'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ResetPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='profile'
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='profile/orders'
+            element={
+              <ProtectedRoute>
+                <ProfileOrders />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* модальные окна */}
-        <Route
-          path='feed/:number'
-          element={
-            <Modal title='Информация о заказе' onClose={handleClose}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-        <Route
-          path='ingredients/:id'
-          element={
-            <Modal title='Детали ингредиента' onClose={handleClose}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-        <Route
-          path='profile/orders/:number'
-          element={
-            <ProtectedRoute>
-              <Modal title='Информация о заказе' onClose={handleClose}>
+          {/* Модальные окна, открываемые как страницы */}
+
+          <Route
+            path='feed/:number'
+            element={
+              <PageWrapper title={`#${location.pathname.split('/').pop()}`}>
+                <OrderInfo />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path='ingredients/:id'
+            element={
+              <PageWrapper title='Детали ингредиента'>
+                <IngredientDetails />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path='profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <PageWrapper title={`#${location.pathname.split('/').pop()}`}>
+                  <OrderInfo />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path='*' element={<NotFound404 />} />
+        </Route>
+      </Routes>
+
+      {background && (
+        <Routes>
+          {/* модальные окна */}
+          <Route
+            path='feed/:number'
+            element={
+              <Modal
+                title={`#${location.pathname.split('/').pop()}`}
+                onClose={handleClose}
+              >
                 <OrderInfo />
               </Modal>
-            </ProtectedRoute>
-          }
-        />
-      </Route>
-    </Routes>
+            }
+          />
+          <Route
+            path='ingredients/:id'
+            element={
+              <Modal title='Детали ингредиента' onClose={handleClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <Modal
+                  title={`#${location.pathname.split('/').pop()}`}
+                  onClose={handleClose}
+                >
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      )}
+    </>
   );
 };
 

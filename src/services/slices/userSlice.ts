@@ -1,6 +1,4 @@
 import {
-  TLoginData,
-  TRegisterData,
   loginUserApi,
   registerUserApi,
   getUserApi,
@@ -8,7 +6,6 @@ import {
   updateUserApi,
   getOrdersApi
 } from '@/utils/burger-api';
-import { setCookie, deleteCookie } from '@/utils/cookie';
 import { TOrder, TUser } from '@/utils/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
@@ -30,42 +27,15 @@ const initialState: UserState = {
 
 export const refreshUser = createAsyncThunk('user/refresh', getUserApi);
 
-export const registerUser = createAsyncThunk(
-  'user/register',
-  async (data: TRegisterData) => {
-    const res = await registerUserApi(data);
+export const registerUser = createAsyncThunk('user/register', registerUserApi);
 
-    setCookie('accessToken', res.accessToken);
-    localStorage.setItem('refreshToken', res.refreshToken);
-    return res;
-  }
-);
-
-export const loginUser = createAsyncThunk(
-  'user/login',
-  async (data: TLoginData) => {
-    const res = await loginUserApi(data);
-
-    setCookie('accessToken', res.accessToken);
-    localStorage.setItem('refreshToken', res.refreshToken);
-    return res;
-  }
-);
+export const loginUser = createAsyncThunk('user/login', loginUserApi);
 
 export const logoutUser = createAsyncThunk('user/logout', logoutApi);
 
-export const editUser = createAsyncThunk(
-  'user/edit',
-  async (data: Partial<TRegisterData>) => {
-    const res = await updateUserApi(data);
-    return res;
-  }
-);
+export const editUser = createAsyncThunk('user/edit', updateUserApi);
 
-export const getUsersOrders = createAsyncThunk('user/orders', async () => {
-  const res = await getOrdersApi();
-  return res;
-});
+export const getUsersOrders = createAsyncThunk('user/orders', getOrdersApi);
 
 const userSlice = createSlice({
   name: 'user',
@@ -130,8 +100,6 @@ const userSlice = createSlice({
       state.user = null;
       state.isAuth = false;
       state.error = null;
-      deleteCookie('accessToken');
-      localStorage.removeItem('refreshToken');
     });
 
     builder.addCase(editUser.pending, (state) => {

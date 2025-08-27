@@ -5,7 +5,7 @@ import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
 import { selectAllIngredients } from '@/services/selectors/ingredients';
 import { useAppDispatch, useAppSelector } from '@/services/store';
-import { getOrderById } from '@/services/slices/feedSlice';
+import { clearOrderById, getOrderById } from '@/services/slices/feedSlice';
 import { selectOrderById } from '@/services/selectors/feed';
 
 export const OrderInfo: FC = () => {
@@ -17,6 +17,10 @@ export const OrderInfo: FC = () => {
 
   useEffect(() => {
     if (orderId) dispatch(getOrderById(+orderId));
+
+    return () => {
+      dispatch(clearOrderById());
+    };
   }, []);
 
   const orderInfo = useMemo(() => {
