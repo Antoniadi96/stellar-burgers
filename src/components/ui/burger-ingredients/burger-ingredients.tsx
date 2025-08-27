@@ -5,6 +5,10 @@ import styles from './burger-ingredients.module.css';
 import { BurgerIngredientsUIProps } from './type';
 import { IngredientsCategory } from '@components';
 
+/**
+ * UI-обёртка списка ингредиентов.
+ * Скролл колонки управляется через listRef, который передаёт контейнерный компонент.
+ */
 export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
   ({
     currentTab,
@@ -17,52 +21,50 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
     bunsRef,
     mainsRef,
     saucesRef,
+    listRef, // <— ВАЖНО: реф на прокручиваемый контейнер
     onTabClick
   }) => (
-    <>
-      <section className={styles.burger_ingredients}>
-        <nav>
-          <ul className={styles.menu}>
-            <Tab value='bun' active={currentTab === 'bun'} onClick={onTabClick}>
-              Булки
-            </Tab>
-            <Tab
-              value='main'
-              active={currentTab === 'main'}
-              onClick={onTabClick}
-            >
-              Начинки
-            </Tab>
-            <Tab
-              value='sauce'
-              active={currentTab === 'sauce'}
-              onClick={onTabClick}
-            >
-              Соусы
-            </Tab>
-          </ul>
-        </nav>
-        <div className={styles.content}>
-          <IngredientsCategory
-            title='Булки'
-            titleRef={titleBunRef}
-            ingredients={buns}
-            ref={bunsRef}
-          />
-          <IngredientsCategory
-            title='Начинки'
-            titleRef={titleMainRef}
-            ingredients={mains}
-            ref={mainsRef}
-          />
-          <IngredientsCategory
-            title='Соусы'
-            titleRef={titleSaucesRef}
-            ingredients={sauces}
-            ref={saucesRef}
-          />
-        </div>
-      </section>
-    </>
+    <section className={styles.burger_ingredients}>
+      <nav>
+        <ul className={styles.menu}>
+          <Tab value='bun' active={currentTab === 'bun'} onClick={onTabClick}>
+            Булки
+          </Tab>
+          <Tab value='main' active={currentTab === 'main'} onClick={onTabClick}>
+            Начинки
+          </Tab>
+          <Tab
+            value='sauce'
+            active={currentTab === 'sauce'}
+            onClick={onTabClick}
+          >
+            Соусы
+          </Tab>
+        </ul>
+      </nav>
+
+      {/* Контейнер со СВОИМ скроллбаром — на него вешаем listRef */}
+
+      <div className={styles.content} ref={listRef}>
+        <IngredientsCategory
+          title='Булки'
+          titleRef={titleBunRef}
+          ingredients={buns}
+          ref={bunsRef}
+        />
+        <IngredientsCategory
+          title='Начинки'
+          titleRef={titleMainRef}
+          ingredients={mains}
+          ref={mainsRef}
+        />
+        <IngredientsCategory
+          title='Соусы'
+          titleRef={titleSaucesRef}
+          ingredients={sauces}
+          ref={saucesRef}
+        />
+      </div>
+    </section>
   )
 );

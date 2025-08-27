@@ -16,7 +16,10 @@ module.exports = {
         test: /\.(ts)x?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'ts-loader'
+          loader: 'ts-loader',
+          options: {
+            configFile: path.resolve(__dirname, 'tsconfig.json')
+          }
         }
       },
       {
@@ -71,14 +74,16 @@ module.exports = {
       '.jpg'
     ],
     alias: {
-      '@pages': path.resolve(__dirname, './src/pages'),
+      '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components'),
-      '@ui': path.resolve(__dirname, './src/components/ui'),
-      '@ui-pages': path.resolve(__dirname, './src/components/ui/pages'),
-      '@utils-types': path.resolve(__dirname, './src/utils/types'),
-      '@api': path.resolve(__dirname, './src/utils/burger-api.ts'),
-      '@slices': path.resolve(__dirname, './src/services/slices'),
-      '@selectors': path.resolve(__dirname, './src/services/selectors')
+    '@ui': path.resolve(__dirname, './src/components/ui'),
+    '@ui-pages': path.resolve(__dirname, './src/components/ui/pages'),
+    '@utils-types': path.resolve(__dirname, './src/utils/types'),
+    '@providers': path.resolve(__dirname, './src/providers'),
+    '@pages': path.resolve(__dirname, './src/pages'),
+    '@api': path.resolve(__dirname, './src/utils/burger-api.ts'),
+    '@slices': path.resolve(__dirname, './src/services/slices'),
+    '@selectors': path.resolve(__dirname, './src/services/selectors')
     }
   },
   output: {
@@ -89,6 +94,7 @@ module.exports = {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000
+    port: 5000,
+    open: true
   }
 };
