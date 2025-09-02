@@ -16,7 +16,9 @@ p {
 }
 
 .content {
-  overflow-y: scroll;
+  max-height: calc(100vh - 260px); 
+  overflow-y: auto;
+  scroll-behavior: smooth; 
 }
 
 .menu {
@@ -32,4 +34,8 @@ p {
   font-weight: bold;
   font-size: 24px;
   line-height: 30px;
+}
+
+.categoryTitle {
+  scroll-margin-top: 12px;
 }

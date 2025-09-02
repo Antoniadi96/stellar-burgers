@@ -19,3 +19,26 @@
   height: 100%;
   overflow: hidden;
 }
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 520px; 
+  gap: 40px;
+  align-items: start;
+}
+
+.leftCol {
+  min-width: 0; 
+}
+.rightCol {
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .main {
+    grid-template-columns: 1fr; 
+  }
+  .rightCol {
+    margin-top: 24px;
+  }
+}
