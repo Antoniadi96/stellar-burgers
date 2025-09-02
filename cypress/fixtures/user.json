@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YWIzMDUxNjczMDg2MDAxYmE4NDcxNyIsImlhdCI6MTc1NjgxMTMzNCwiZXhwIjoxNzU2ODEyNTM0fQ.toCHPkcXfMDBkvlTnifsF3f33xEu3W5f_LhCt8PlCBc",
+  "refreshToken": "7348c5e601281c81585e5310aa48c0c0c925d533fe6b1af937766890d7b93e849444cb6a4bef0f3a",
+  "user": {
+    "email": "antoniadisasha@bk.ru",
+    "name": "Александр"
+  }
+}

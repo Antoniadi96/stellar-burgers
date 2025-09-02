@@ -9,7 +9,7 @@ import {
 import { TOrder, TUser } from '@/utils/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-type UserState = {
+export type UserState = {
   user: TUser | null;
   usersOrders: TOrder[];
   isAuth: boolean;

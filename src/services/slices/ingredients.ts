@@ -3,12 +3,16 @@ import { getIngredientsApi } from '@api';
 import type { TIngredient } from '@utils-types';
 import type { RootState } from '../root-reducer';
 
-type State = {
+export type IngredientsState = {
   items: TIngredient[];
   isLoading: boolean;
   error: string | null;
 };
-const initialState: State = { items: [], isLoading: false, error: null };
+const initialState: IngredientsState = {
+  items: [],
+  isLoading: false,
+  error: null
+};
 
 export const fetchIngredients = createAsyncThunk<
   TIngredient[],
@@ -46,6 +50,7 @@ const slice = createSlice({
       (s, a: PayloadAction<TIngredient[]>) => {
         s.items = a.payload;
         s.isLoading = false;
+        s.error = null;
       }
     );
     b.addCase(fetchIngredients.rejected, (s, a) => {

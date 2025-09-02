@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFeedsApi, getOrderByNumberApi } from '../../utils/burger-api';
 import { TOrder } from '../../utils/types';
 
-interface FeedState {
+export interface FeedState {
   orders: TOrder[];
   orderById: TOrder | null;
   total: number;

@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import ingredientsReducer from '@slices/ingredients';
+import ingredientsReducer from './slices/ingredients';
 import feedReducer from './slices/feedSlice';
 import constructorSlice from './slices/constructorSlice';
 import userSlice from './slices/userSlice';
