@@ -1,6 +1,7 @@
 import ingredientReducer, {
   fetchIngredients,
-  IngredientsState
+  IngredientsState,
+  initialState
 } from '../ingredients';
 
 describe('ingredientsSlice', () => {
@@ -8,52 +9,51 @@ describe('ingredientsSlice', () => {
 
   describe('тестирование fetchIngredients', () => {
     it('тестирование fetchIngredients.pending', () => {
-      const initialState: IngredientsState = {
-        items: [],
-        isLoading: false,
-        error: null
-      };
       const updatedState = ingredientReducer(initialState, {
         type: fetchIngredients.pending.type
       });
-      expect(updatedState).toEqual({ items: [], isLoading: true, error: null });
+
+      expect(updatedState).toEqual({
+        ...initialState,
+        isLoading: true
+      });
     });
 
     it('тестирование fetchIngredients.rejected', () => {
-      const initialState: IngredientsState = {
-        items: [],
-        isLoading: true,
-        error: null
+      const startState: IngredientsState = {
+        ...initialState,
+        isLoading: true
       };
 
-      const updatedState = ingredientReducer(initialState, {
+      const updatedState = ingredientReducer(startState, {
         type: fetchIngredients.rejected.type,
         payload: errorText
       });
+
       expect(updatedState).toEqual({
-        items: [],
+        ...initialState,
         isLoading: false,
         error: errorText
       });
     });
 
     it('тестирование fetchIngredients.fullfilled', () => {
-      const initialState: IngredientsState = {
-        items: [],
+      const startState: IngredientsState = {
+        ...initialState,
         isLoading: true,
         error: errorText
       };
 
       const payload = ['mock1', 'mock2'];
-      const updatedState = ingredientReducer(initialState, {
+      const updatedState = ingredientReducer(startState, {
         type: fetchIngredients.fulfilled.type,
         payload
       });
 
       expect(updatedState).toEqual({
+        ...initialState,
         items: payload,
-        isLoading: false,
-        error: null
+        isLoading: false
       });
     });
   });

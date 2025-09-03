@@ -3,7 +3,8 @@ import constructorReducer, {
   addIngredient,
   removeIngredient,
   moveIngredientDown,
-  moveIngredientUp
+  moveIngredientUp,
+  initialState
 } from '../constructorSlice';
 
 describe('constructorSlice', () => {
@@ -72,17 +73,6 @@ describe('constructorSlice', () => {
   };
 
   it('добавление булки', () => {
-    const initialState: ConstructorState = {
-      constructorItems: {
-        bun: null,
-        ingredients: []
-      },
-      isLoading: false,
-      error: null,
-      orderModalData: null,
-      orderRequest: false
-    };
-
     const updatedState = constructorReducer(initialState, addIngredient(bun1));
 
     expect(updatedState.constructorItems.bun).toEqual({
@@ -92,17 +82,6 @@ describe('constructorSlice', () => {
   });
 
   it('добавление начинки', () => {
-    const initialState: ConstructorState = {
-      constructorItems: {
-        bun: null,
-        ingredients: []
-      },
-      isLoading: false,
-      error: null,
-      orderModalData: null,
-      orderRequest: false
-    };
-
     const updatedState = constructorReducer(
       initialState,
       addIngredient(ingredient1)
@@ -115,19 +94,16 @@ describe('constructorSlice', () => {
   });
 
   it('удаление начинки', () => {
-    const initialState: ConstructorState = {
+    const startState: ConstructorState = {
+      ...initialState,
       constructorItems: {
-        bun: null,
+        ...initialState.constructorItems,
         ingredients: [ingredient1]
-      },
-      isLoading: false,
-      error: null,
-      orderModalData: null,
-      orderRequest: false
+      }
     };
 
     const updatedState = constructorReducer(
-      initialState,
+      startState,
       removeIngredient(ingredient1.id)
     );
 
@@ -135,19 +111,16 @@ describe('constructorSlice', () => {
   });
 
   it('перемещение ингредиента вверх', () => {
-    const initialState: ConstructorState = {
+    const startState: ConstructorState = {
+      ...initialState,
       constructorItems: {
-        bun: null,
+        ...initialState.constructorItems,
         ingredients: [ingredient1, ingredient2, ingredient3]
-      },
-      isLoading: false,
-      error: null,
-      orderModalData: null,
-      orderRequest: false
+      }
     };
 
     const updatedState = constructorReducer(
-      initialState,
+      startState,
       moveIngredientUp(ingredient2.id)
     );
 
@@ -158,20 +131,17 @@ describe('constructorSlice', () => {
     ]);
   });
 
-  it('перемещение ингредиента вверх', () => {
-    const initialState: ConstructorState = {
+  it('перемещение ингредиента вниз', () => {
+    const startState: ConstructorState = {
+      ...initialState,
       constructorItems: {
-        bun: null,
+        ...initialState.constructorItems,
         ingredients: [ingredient1, ingredient2, ingredient3]
-      },
-      isLoading: false,
-      error: null,
-      orderModalData: null,
-      orderRequest: false
+      }
     };
 
     const updatedState = constructorReducer(
-      initialState,
+      startState,
       moveIngredientDown(ingredient2.id)
     );
 
