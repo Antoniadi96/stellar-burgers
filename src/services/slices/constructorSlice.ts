@@ -7,7 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import { orderBurgerApi } from '@/utils/burger-api';
 
-interface ConstructorState {
+export interface ConstructorState {
   constructorItems: {
     bun: TConstructorIngredient | null;
     ingredients: Array<TConstructorIngredient>;
@@ -17,7 +17,7 @@ interface ConstructorState {
   orderModalData: TOrder | null;
   orderRequest: boolean;
 }
-const initialState: ConstructorState = {
+export const initialState: ConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
